@@ -3,9 +3,8 @@ import java.time.LocalDate;
 
 import com.sleepycat.persist.model.Persistent;
 
-@Persistent(version=1)
-public class Article implements InteractableItem, Comparable<Article>
-{
+@Persistent(version = 1)
+public class Article implements InteractableItem, Comparable<Article> {
     private Author author;
     private String title, category, previewText;
 
@@ -15,94 +14,59 @@ public class Article implements InteractableItem, Comparable<Article>
 
     private boolean read = false;
 
-    public Author getAuthor()
-    {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author)
-    {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    /**
-     * @return the category
-     */
-    public String getCategory()
-    {
+    public String getCategory() {
         return category;
     }
 
-    /**
-     * @param category
-     *            the category to set
-     */
-    public void setCategory(String category)
-    {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    /**
-     * @return the previewText
-     */
-    public String getPreviewText()
-    {
+    public String getPreviewText() {
         return previewText;
     }
 
-    /**
-     * @param previewText
-     *            the previewText to set
-     */
-    public void setPreviewText(String previewText)
-    {
+    public void setPreviewText(String previewText) {
         this.previewText = previewText;
     }
 
-    /**
-     * @return the published
-     */
-    public LocalDate getPublished()
-    {
+    public LocalDate getPublished() {
         return published;
     }
 
-    /**
-     * @param published
-     *            the published to set
-     */
-    public void setPublished(LocalDate published)
-    {
+    public void setPublished(LocalDate published) {
         this.published = published;
     }
 
-    public URL getUrl()
-    {
+    public URL getUrl() {
         return url;
     }
 
-    public void setUrl(URL url)
-    {
+    public void setUrl(URL url) {
         this.url = url;
     }
 
-    public boolean isRead()
-    {
+    public boolean isRead() {
         return read;
     }
 
-    public void setRead(boolean read)
-    {
+    public void setRead(boolean read) {
         this.read = read;
     }
 
@@ -112,8 +76,7 @@ public class Article implements InteractableItem, Comparable<Article>
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return title;
     }
 
@@ -123,15 +86,12 @@ public class Article implements InteractableItem, Comparable<Article>
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((author == null) ? 0 : author.hashCode());
-        result = prime * result
-                + ((category == null) ? 0 : category.hashCode());
-        result = prime * result
-                + ((published == null) ? 0 : published.hashCode());
+        result = prime * result + ((category == null) ? 0 : category.hashCode());
+        result = prime * result + ((published == null) ? 0 : published.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((url == null) ? 0 : url.hashCode());
         return result;
@@ -143,8 +103,7 @@ public class Article implements InteractableItem, Comparable<Article>
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -152,32 +111,27 @@ public class Article implements InteractableItem, Comparable<Article>
         if (getClass() != obj.getClass())
             return false;
         Article other = (Article) obj;
-        if (author == null)
-        {
+        if (author == null) {
             if (other.author != null)
                 return false;
         } else if (!author.equals(other.author))
             return false;
-        if (category == null)
-        {
+        if (category == null) {
             if (other.category != null)
                 return false;
         } else if (!category.equals(other.category))
             return false;
-        if (published == null)
-        {
+        if (published == null) {
             if (other.published != null)
                 return false;
         } else if (!published.equals(other.published))
             return false;
-        if (title == null)
-        {
+        if (title == null) {
             if (other.title != null)
                 return false;
         } else if (!title.equals(other.title))
             return false;
-        if (url == null)
-        {
+        if (url == null) {
             if (other.url != null)
                 return false;
         } else if (!url.equals(other.url))
@@ -186,8 +140,7 @@ public class Article implements InteractableItem, Comparable<Article>
     }
 
     @Override
-    public int compareTo(Article o)
-    {
+    public int compareTo(Article o) {
         return getPublished().compareTo(o.getPublished());
     }
 }

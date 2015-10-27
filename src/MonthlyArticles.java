@@ -8,8 +8,7 @@ import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 
 @Entity
-public class MonthlyArticles implements InteractableItem, Comparable<MonthlyArticles>
-{
+public class MonthlyArticles implements InteractableItem, Comparable<MonthlyArticles> {
     @PrimaryKey
     private String dateKey;
 
@@ -17,41 +16,34 @@ public class MonthlyArticles implements InteractableItem, Comparable<MonthlyArti
 
     private Set<Article> articles = new TreeSet<>(Collections.reverseOrder());
 
-    public LocalDate getDate()
-    {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date)
-    {
+    public void setDate(LocalDate date) {
         this.date = date;
         this.dateKey = date.toString();
     }
 
-    public Set<Article> getArticles()
-    {
+    public Set<Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(Set<Article> articles)
-    {
+    public void setArticles(Set<Article> articles) {
         this.articles = articles;
     }
 
-    public String getDateKey()
-    {
+    public String getDateKey() {
         return dateKey;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return date.format(DateTimeFormatter.ofPattern("MMMM yyyy"));
     }
 
     @Override
-    public int compareTo(MonthlyArticles o)
-    {
+    public int compareTo(MonthlyArticles o) {
         return getDate().compareTo(o.getDate());
     }
 }

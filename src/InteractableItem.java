@@ -1,4 +1,3 @@
 
-public interface InteractableItem
-{
+public interface InteractableItem {
 }

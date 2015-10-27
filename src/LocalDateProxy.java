@@ -6,7 +6,9 @@ import com.sleepycat.persist.model.PersistentProxy;
 @Persistent(proxyFor=LocalDate.class)
 public class LocalDateProxy implements PersistentProxy<LocalDate> {
 
-    private int dayOfMonth, month, year;
+    private int dayOfMonth,
+                month,
+                year;
 
     private LocalDateProxy() {}
 
@@ -18,5 +20,5 @@ public class LocalDateProxy implements PersistentProxy<LocalDate> {
 
       public LocalDate convertProxy() {
           return LocalDate.of(year, month, dayOfMonth);
-      }
-  }
+    }
+}
