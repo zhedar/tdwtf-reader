@@ -32,6 +32,8 @@ public class Main extends Application {
 
     private ExecutorService executor;
 
+    static private int maxMonthCount = calcNumberOfAvailableMonths();
+
     @Override
     public void start(Stage stage) throws DatabaseException, Exception {
         stage.setTitle("TDWTF Reader");
@@ -92,13 +94,13 @@ public class Main extends Application {
         stage.show();
     }
 
-    private int calcNumberOfAvailableMonths() {
+    private static int calcNumberOfAvailableMonths() {
         LocalDate now = LocalDate.now();
         int count = 0;
         for (int articleYear = 2004; articleYear <= now.getYear(); articleYear++)
             for (int articleMonth = 1; articleMonth <= 12; articleMonth++)
                 if (!(articleYear == 2004 && articleMonth < 5) &&
-                    !(articleYear == now.getYear() && articleMonth > now.getMonthValue()))
+                    !(articleYear == now.getYear() && articleMonth >= now.getMonthValue()))
                     count++;
 
         return count;
@@ -117,8 +119,6 @@ public class Main extends Application {
                     if (articleYear == 2004 && articleMonth < 5)
                         break;
 
-                    System.out.println(articleMonth + " " + articleYear);
-
                     MonthlyArticles ma = ds.getArticles(articleYear, articleMonth);
 
                     //scrape articles, if needed
@@ -133,6 +133,7 @@ public class Main extends Application {
                 }
             }
     }
+
     private void createTreeItem(TreeItem<InteractableItem> root, MonthlyArticles mo) {
         TreeItem<InteractableItem> treeItem = new TreeItem<InteractableItem>(mo);
 
@@ -156,6 +157,7 @@ public class Main extends Application {
             treeItem.getChildren().add(cb);
         }
 
+        root.setValue(new TreeItemRootNode("Avaiable Months (" + root.getChildren().size() + " / " + maxMonthCount + ")"));
         root.getChildren().add(treeItem);
         root.getChildren().sort((o1, o2) -> ((MonthlyArticles)o2.getValue()).compareTo((MonthlyArticles)o1.getValue()));
     }
