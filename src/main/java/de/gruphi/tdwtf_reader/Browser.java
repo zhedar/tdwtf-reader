@@ -2,12 +2,11 @@ package de.gruphi.tdwtf_reader;
 import java.io.IOException;
 import java.net.URL;
 
-import org.jsoup.Jsoup;
-
 import de.gruphi.tdwtf_reader.db.DataStore;
 import de.gruphi.tdwtf_reader.entities.Article;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.concurrent.Task;
 import javafx.concurrent.Worker.State;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -47,8 +46,8 @@ public class Browser extends Region {
             }
         });
 
-        String articleBaseUrl = "http://thedailywtf.com/articles/";
-        webEngine.load(articleBaseUrl);
+//        String articleBaseUrl = "http://thedailywtf.com/articles/";
+//        webEngine.load(articleBaseUrl);
 
         // add the web view to the scene
         getChildren().add(browser);
@@ -76,13 +75,9 @@ public class Browser extends Region {
     }
 
     public void loadArticle(Article a, BooleanProperty prop) {
-        try {
-            webEngine.loadContent(Jsoup.connect(a.getUrl().toString()).get().select("div.article-body").toString());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        // loadUrl(a.getUrl());
+        Task<String> task = new DownloadArticleTask(a);
+        task.setOnSucceeded(event -> webEngine.loadContent(event.getSource().getValue().toString()));
+        new Thread(task).start();
 
         currentArticle = a;
         articleReadProp = prop;

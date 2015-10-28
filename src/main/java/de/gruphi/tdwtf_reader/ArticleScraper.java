@@ -109,7 +109,7 @@ public class ArticleScraper {
         }
     }
 
-    public static void main(String[] args) throws DatabaseException, Exception {
+    public static void main(MonthlyArticles[] args) throws DatabaseException, Exception {
         try (DataStore d = new DataStore()) {
             db = d;
             iterateMonths();
