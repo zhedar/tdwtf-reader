@@ -61,8 +61,6 @@ public class DataStore implements AutoCloseable {
         articles.add(article);
 
         pIndex.put(entity);
-
-        Constants.logger.info(monthDate + ": " + articles.size());
     }
 
     public void updateArticle(Article article) throws DatabaseException {
