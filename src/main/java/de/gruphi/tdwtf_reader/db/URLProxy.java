@@ -1,3 +1,5 @@
+package de.gruphi.tdwtf_reader.db;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 

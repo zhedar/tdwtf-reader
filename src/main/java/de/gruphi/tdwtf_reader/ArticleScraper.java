@@ -1,3 +1,4 @@
+package de.gruphi.tdwtf_reader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
@@ -6,9 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,15 +14,19 @@ import org.jsoup.nodes.Element;
 
 import com.sleepycat.je.DatabaseException;
 
+import de.gruphi.tdwtf_reader.db.DataStore;
+import de.gruphi.tdwtf_reader.entities.Article;
+import de.gruphi.tdwtf_reader.entities.Author;
+import de.gruphi.tdwtf_reader.entities.MonthlyArticles;
+
 public class ArticleScraper {
     static private final String BASE_URL = "http://thedailywtf.com",
                                 ARTICLE_BASE_URL = BASE_URL + "/articles/";
 
-    static private Set<Article> articles = new TreeSet<>();
-    static private Database db = null;
+    static private DataStore db = null;
 
     static public List<MonthlyArticles> iterateMonths() throws DatabaseException, Exception {
-        try (Database d = new Database(Logger.getAnonymousLogger())) {
+        try (DataStore d = new DataStore()) {
             db = d;
             long start = System.currentTimeMillis();
             LocalDate now = LocalDate.now();
@@ -32,14 +34,31 @@ public class ArticleScraper {
 
             for (int articleYear = 2004; articleYear <= now.getYear(); articleYear++)
                 for (int articleMonth = 1; articleMonth <= 12; articleMonth++) {
+                    //first articles are from May 2004, so skip the months before that
+                    if (articleYear == 2004 && articleMonth < 5)
+                        continue;
+                    //dont try to scrape future months
+                    if (articleYear == now.getYear() && articleMonth > now.getMonthValue())
+                        break;
+
+                    System.out.println(articleMonth + " " + articleYear);
+
                     MonthlyArticles ma = db.getArticles(LocalDate.of(articleYear, articleMonth, 1));
+
+                    //scrape articles, if needed
+                    if (ma == null || articleMonth == now.getMonthValue()) {
+//                        ma = new ScrapeMonthlyArticlesTask(db, articleYear, articleMonth);
+                        System.out.println("null");
+                    }
+
                     if (ma != null) {
+                        System.out.println("NOT NULL");
                         moArticles.add(ma);
                     }
+                    else
+                        System.err.println("null!!!");
                     // scrape(articleYear, articleMonth);
                 }
-            System.out.println(articles.size());
-            System.out.println((System.currentTimeMillis() - start) + "ms");
 
             Collections.sort(moArticles, Collections.reverseOrder());
 
@@ -47,7 +66,7 @@ public class ArticleScraper {
         }
     }
 
-    static public void scrape(int articleYear, int articleMonth) throws IOException, ParseException {
+    static public void scrapeMonth(int articleYear, int articleMonth) throws IOException, ParseException {
         Document doc2 = Jsoup.connect(ARTICLE_BASE_URL + articleYear + "/" + articleMonth).timeout(30 * 1000).get();
         for (Element e : doc2.getElementsByClass("articleListItem")) {
             Article article = new Article();
@@ -87,12 +106,11 @@ public class ArticleScraper {
             }
 
             db.insertArticle(article);
-            articles.add(article);
         }
     }
 
     public static void main(String[] args) throws DatabaseException, Exception {
-        try (Database d = new Database(Logger.getAnonymousLogger())) {
+        try (DataStore d = new DataStore()) {
             db = d;
             iterateMonths();
         }

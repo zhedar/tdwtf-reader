@@ -1,3 +1,5 @@
+package de.gruphi.tdwtf_reader.db;
+
 import java.time.LocalDate;
 
 import com.sleepycat.persist.model.Persistent;

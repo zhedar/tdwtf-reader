@@ -1,10 +1,12 @@
+package de.gruphi.tdwtf_reader.entities;
+
 import java.net.URL;
 import java.time.LocalDate;
 
 import com.sleepycat.persist.model.Persistent;
 
 @Persistent(version = 1)
-public class Article implements InteractableItem, Comparable<Article> {
+public class Article implements InteractableItem, Comparable<Article>{
     private Author author;
     private String title, category, previewText;
 

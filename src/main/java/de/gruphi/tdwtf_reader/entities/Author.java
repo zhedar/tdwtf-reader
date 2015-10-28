@@ -1,3 +1,5 @@
+package de.gruphi.tdwtf_reader.entities;
+
 import com.sleepycat.persist.model.Persistent;
 
 @Persistent
