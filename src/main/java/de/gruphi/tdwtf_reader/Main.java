@@ -55,15 +55,12 @@ public class Main extends Application {
                     @Override
                     public void updateItem(InteractableItem item, boolean empty) {
                         super.updateItem(item, empty);
-                        // If there is no information for the Cell, make it
-                        // empty
+                        // If there is no information for the Cell, make it empty
                         if (empty) {
                             setGraphic(null);
                             setText(null);
                             // Otherwise if it's not representation as an item
-                            // of the tree
-                            // is not a CheckBoxTreeItem, remove the checkbox
-                            // item
+                            // of the tree is not a CheckBoxTreeItem, remove the checkbox item
                         } else if (!(getTreeItem() instanceof CheckBoxTreeItem)) {
                             setGraphic(null);
                         }
@@ -121,21 +118,33 @@ public class Main extends Application {
 
                     MonthlyArticles ma = ds.getArticles(articleYear, articleMonth);
 
+                    //display already saved months
+                    if (ma != null)
+                        createTreeItem(root, ma);
+
                     //scrape articles, if needed
-                    if (ma == null || (articleYear == now.getYear() && articleMonth == now.getMonthValue()) ) {
+                    //TODO update old months if not fetched yet
+                    if (ma == null || (articleYear == now.getYear() && articleMonth == now.getMonthValue())) {
                         Task<MonthlyArticles> task = new ScrapeMonthlyArticlesTask(articleYear, articleMonth);
                         task.setOnSucceeded(event -> createTreeItem(root, (MonthlyArticles) event.getSource().getValue()));
                         executor.execute(task);
                     }
-                    else
-                        createTreeItem(root, ma);
-
                 }
             }
     }
 
     private void createTreeItem(TreeItem<InteractableItem> root, MonthlyArticles mo) {
         TreeItem<InteractableItem> treeItem = new TreeItem<InteractableItem>(mo);
+
+      //in case of an update, remove the older entry
+      for(TreeItem<InteractableItem> i : root.getChildren())
+            if(i.getValue().toString().equals(mo.toString())) {
+                if(root.getValue().equals(mo))
+                    System.out.println(root.getChildren().remove(i));
+                else
+                   return;
+                break;
+            }
 
         for (Article a : mo.getArticles()) {
             CheckBoxTreeItem<InteractableItem> cb = new CheckBoxTreeItem<InteractableItem>(a);
@@ -154,6 +163,7 @@ public class Main extends Application {
                     }
                 }
             });
+
             treeItem.getChildren().add(cb);
         }
 
