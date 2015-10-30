@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 
 import com.sleepycat.je.DatabaseException;
 
+import de.gruphi.tdwtf_reader.concurrency.ScrapeMonthlyArticlesTask;
 import de.gruphi.tdwtf_reader.db.DataStore;
 import de.gruphi.tdwtf_reader.entities.Article;
 import de.gruphi.tdwtf_reader.entities.InteractableItem;

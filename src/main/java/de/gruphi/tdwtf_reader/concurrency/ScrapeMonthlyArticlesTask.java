@@ -1,4 +1,4 @@
-package de.gruphi.tdwtf_reader;
+package de.gruphi.tdwtf_reader.concurrency;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -14,6 +14,7 @@ import org.jsoup.nodes.Element;
 
 import com.sleepycat.je.DatabaseException;
 
+import de.gruphi.tdwtf_reader.Constants;
 import de.gruphi.tdwtf_reader.db.DBUtil;
 import de.gruphi.tdwtf_reader.entities.Article;
 import de.gruphi.tdwtf_reader.entities.Author;

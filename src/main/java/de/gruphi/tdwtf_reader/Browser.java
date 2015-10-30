@@ -2,6 +2,7 @@ package de.gruphi.tdwtf_reader;
 import java.io.IOException;
 import java.net.URL;
 
+import de.gruphi.tdwtf_reader.concurrency.DownloadArticleTask;
 import de.gruphi.tdwtf_reader.db.DataStore;
 import de.gruphi.tdwtf_reader.entities.Article;
 import javafx.beans.property.BooleanProperty;

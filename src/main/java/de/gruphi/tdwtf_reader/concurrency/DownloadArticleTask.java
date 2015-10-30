@@ -1,4 +1,4 @@
-package de.gruphi.tdwtf_reader;
+package de.gruphi.tdwtf_reader.concurrency;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
