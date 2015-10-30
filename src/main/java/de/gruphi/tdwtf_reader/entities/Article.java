@@ -143,6 +143,6 @@ public class Article implements InteractableItem, Comparable<Article>{
 
     @Override
     public int compareTo(Article o) {
-        return getPublished().compareTo(o.getPublished());
+        return o.getPublished().compareTo(getPublished());
     }
 }

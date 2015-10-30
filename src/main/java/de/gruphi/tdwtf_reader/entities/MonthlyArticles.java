@@ -2,7 +2,6 @@ package de.gruphi.tdwtf_reader.entities;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -16,7 +15,7 @@ public class MonthlyArticles implements InteractableItem, Comparable<MonthlyArti
 
     private LocalDate date;
 
-    private Set<Article> articles = new TreeSet<>(Collections.reverseOrder());
+    private Set<Article> articles = new TreeSet<>();
 
     public LocalDate getDate() {
         return date;
@@ -47,5 +46,48 @@ public class MonthlyArticles implements InteractableItem, Comparable<MonthlyArti
     @Override
     public int compareTo(MonthlyArticles o) {
         return getDate().compareTo(o.getDate());
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((articles == null) ? 0 : articles.hashCode());
+        result = prime * result + ((date == null) ? 0 : date.hashCode());
+        result = prime * result + ((dateKey == null) ? 0 : dateKey.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        MonthlyArticles other = (MonthlyArticles) obj;
+        if (articles == null) {
+            if (other.articles != null)
+                return false;
+        } else if (!articles.equals(other.articles))
+            return false;
+        if (date == null) {
+            if (other.date != null)
+                return false;
+        } else if (!date.equals(other.date))
+            return false;
+        if (dateKey == null) {
+            if (other.dateKey != null)
+                return false;
+        } else if (!dateKey.equals(other.dateKey))
+            return false;
+        return true;
     }
 }
