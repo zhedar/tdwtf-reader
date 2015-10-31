@@ -69,9 +69,10 @@ public class Main extends Application {
                             setText(null);
                             // Otherwise if it's not representation as an item
                             // of the tree is not a CheckBoxTreeItem, remove the checkbox item
-                        } else if (!(getTreeItem() instanceof CheckBoxTreeItem)) {
+                        } else if (!(getTreeItem() instanceof CheckBoxTreeItem))
                             setGraphic(null);
-                        }
+                        else if(item!=null && !item.provideStyle().isEmpty())
+                            setStyle(item.provideStyle());
                     }
                 };
             }
@@ -95,7 +96,7 @@ public class Main extends Application {
 
         scene = new Scene(pane, screen.getWidth(), screen.getHeight(), Color.WHITE);
         stage.setScene(scene);
-        
+
         tree.setPrefHeight(screen.getHeight());
 
         scene.getStylesheets().add("reader.css");
@@ -171,6 +172,7 @@ public class Main extends Application {
 
         for (Article a : mo.getArticles()) {
             CheckBoxTreeItem<InteractableItem> cb = new CheckBoxTreeItem<InteractableItem>(a);
+
             cb.selectedProperty().set(a.isRead());
             cb.selectedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override

@@ -145,4 +145,24 @@ public class Article implements InteractableItem, Comparable<Article>{
     public int compareTo(Article o) {
         return o.getPublished().compareTo(getPublished());
     }
+
+    @Override
+    public String provideStyle() {
+        System.out.println(category);
+        switch(category) {
+            case "CodeSOD":
+                return "-fx-color:#c1103b";
+            case "Error'd":
+                return "-fx-color:#E4A838";
+            case "Feature Articles":
+                return "-fx-color:#2db8c2";
+            case "Tales from the Interview":
+                return "-fx-color:#f9622f";
+            case "Editor's Soapbox":
+                return "-fx-color: #95397a";
+
+            default:
+                return "";
+        }
+    }
 }
