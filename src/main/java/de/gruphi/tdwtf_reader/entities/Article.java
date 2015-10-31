@@ -148,7 +148,6 @@ public class Article implements InteractableItem, Comparable<Article>{
 
     @Override
     public String provideStyle() {
-        System.out.println(category);
         switch(category) {
             case "CodeSOD":
                 return "-fx-color:#c1103b";
@@ -159,8 +158,7 @@ public class Article implements InteractableItem, Comparable<Article>{
             case "Tales from the Interview":
                 return "-fx-color:#f9622f";
             case "Editor's Soapbox":
-                return "-fx-color: #95397a";
-
+                return "-fx-color:#95397a";
             default:
                 return "";
         }
