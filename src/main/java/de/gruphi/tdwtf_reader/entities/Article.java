@@ -157,10 +157,8 @@ public class Article implements InteractableItem, Comparable<Article>{
                 return "-fx-color:#2db8c2";
             case "Tales from the Interview":
                 return "-fx-color:#f9622f";
-            case "Editor's Soapbox":
-                return "-fx-color:#95397a";
             default:
-                return "";
+                return "-fx-color:#95397a";
         }
     }
 }
