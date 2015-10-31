@@ -31,7 +31,6 @@ public class ScrapeMonthlyArticlesTask extends Task<MonthlyArticles> {
 
     @Override
     protected MonthlyArticles call() throws Exception {
-        System.out.println("SCRAPE " + year + " " + month);
         scrapeMonth(year, month);
         return DBUtil.getArticles(year, month);
     }

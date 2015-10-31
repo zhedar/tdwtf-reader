@@ -12,17 +12,21 @@ import de.gruphi.tdwtf_reader.entities.InteractableItem;
 import de.gruphi.tdwtf_reader.entities.MonthlyArticles;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -30,10 +34,12 @@ import javafx.util.Callback;
 
 public class Main extends Application {
     private Scene scene;
+    private ProgressBar pb;
 
     private ExecutorService executor;
 
-    static private int maxMonthCount = calcNumberOfAvailableMonths();
+    private DoubleProperty retrievedMonthCount = new SimpleDoubleProperty(0);
+    private static int maxMonthCount = calcNumberOfAvailableMonths();
 
     @Override
     public void start(Stage stage) throws DatabaseException, Exception {
@@ -73,9 +79,16 @@ public class Main extends Application {
         tree.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> handle(newValue, browser));
 
-        pane.setLeft(tree);
+        VBox vb = new VBox();
+        vb.setSpacing(2);
+        pb = new ProgressBar();
+        pb.prefWidthProperty().bind(vb.widthProperty());
+        pb.progressProperty().bind(retrievedMonthCount.divide(maxMonthCount));
+
+        vb.getChildren().addAll(pb, tree);
+        pane.setLeft(vb);
         pane.setCenter(browser);
-        scene = new Scene(pane, 750, 500, Color.web("#666970"));
+        scene = new Scene(pane, 750, 500, Color.WHITE);
         stage.setScene(scene);
         scene.getStylesheets().add("reader.css");
 
@@ -128,6 +141,7 @@ public class Main extends Application {
                     if (ma == null || (articleYear == now.getYear() && articleMonth == now.getMonthValue())) {
                         Task<MonthlyArticles> task = new ScrapeMonthlyArticlesTask(articleYear, articleMonth);
                         task.setOnSucceeded(event -> createTreeItem(root, (MonthlyArticles) event.getSource().getValue()));
+                        task.setOnFailed(event -> System.err.println(task.getException()));
                         executor.execute(task);
                     }
                 }
@@ -141,7 +155,7 @@ public class Main extends Application {
       for(TreeItem<InteractableItem> i : root.getChildren())
             if(i.getValue().toString().equals(mo.toString())) {
                 if(root.getValue().equals(mo))
-                    System.out.println(root.getChildren().remove(i));
+                    root.getChildren().remove(i);
                 else
                    return;
                 break;
@@ -171,6 +185,7 @@ public class Main extends Application {
         root.setValue(new TreeItemRootNode("Avaiable Months (" + root.getChildren().size() + " / " + maxMonthCount + ")"));
         root.getChildren().add(treeItem);
         root.getChildren().sort((o1, o2) -> ((MonthlyArticles)o2.getValue()).compareTo((MonthlyArticles)o1.getValue()));
+        retrievedMonthCount.set(retrievedMonthCount.get()+1);
     }
 
     private Object handle(TreeItem<InteractableItem> newValue, Browser browser) {

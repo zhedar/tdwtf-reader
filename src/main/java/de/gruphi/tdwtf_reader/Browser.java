@@ -9,18 +9,23 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker.State;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 
 public class Browser extends Region {
-
-    final WebView browser = new WebView();
-    final WebEngine webEngine = browser.getEngine();
+    private final WebView browser = new WebView();
+    private final WebEngine webEngine = browser.getEngine();
+    private final ProgressBar progress = new ProgressBar();
+    private final VBox vb;
 
     private Article currentArticle;
     private BooleanProperty articleReadProp;
@@ -47,18 +52,22 @@ public class Browser extends Region {
             }
         });
 
-//        String articleBaseUrl = "http://thedailywtf.com/articles/";
-//        webEngine.load(articleBaseUrl);
+        vb = new VBox();
+        vb.setSpacing(2);
+        vb.setAlignment(Pos.CENTER);
+        progress.prefWidthProperty().bind(vb.widthProperty());
+        progress.visibleProperty().set(Boolean.FALSE);
+        vb.getChildren().addAll(progress, browser);
 
-        // add the web view to the scene
-        getChildren().add(browser);
+
+        getChildren().add(vb);
     }
 
     @Override
     protected void layoutChildren() {
         double w = getWidth();
         double h = getHeight();
-        layoutInArea(browser, 0, 0, w, h, 0, HPos.CENTER, VPos.CENTER);
+        layoutInArea(vb, 0, 0, w, h, 0, HPos.CENTER, VPos.CENTER);
     }
 
     @Override
@@ -77,10 +86,17 @@ public class Browser extends Region {
 
     public void loadArticle(Article a, BooleanProperty prop) {
         Task<String> task = new DownloadArticleTask(a);
-        task.setOnSucceeded(event -> webEngine.loadContent(event.getSource().getValue().toString()));
+        task.setOnRunning(e -> progress.visibleProperty().setValue(Boolean.TRUE));
+        task.setOnSucceeded(event -> onFinishLoading(event));
+        task.setOnFailed(e -> progress.visibleProperty().setValue(Boolean.FALSE));
         new Thread(task).start();
 
         currentArticle = a;
         articleReadProp = prop;
+    }
+
+    public void onFinishLoading(WorkerStateEvent event) {
+        webEngine.loadContent(event.getSource().getValue().toString());
+        progress.visibleProperty().setValue(Boolean.FALSE);
     }
 }
