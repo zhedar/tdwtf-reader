@@ -11,6 +11,8 @@ import de.gruphi.tdwtf_reader.db.DataStore;
 import de.gruphi.tdwtf_reader.entities.Article;
 import de.gruphi.tdwtf_reader.entities.InteractableItem;
 import de.gruphi.tdwtf_reader.entities.MonthlyArticles;
+import de.gruphi.tdwtf_reader.view.Browser;
+import de.gruphi.tdwtf_reader.view.TreeItemRootNode;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
