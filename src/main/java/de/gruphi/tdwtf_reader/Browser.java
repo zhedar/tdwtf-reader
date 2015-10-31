@@ -2,6 +2,8 @@ package de.gruphi.tdwtf_reader;
 import java.io.IOException;
 import java.net.URL;
 
+import com.sun.glass.ui.Screen;
+
 import de.gruphi.tdwtf_reader.concurrency.DownloadArticleTask;
 import de.gruphi.tdwtf_reader.db.DataStore;
 import de.gruphi.tdwtf_reader.entities.Article;
@@ -32,7 +34,6 @@ public class Browser extends Region {
 
     public Browser() throws IOException {
 //        getStyleClass().add("browser");
-
         webEngine.getLoadWorker().stateProperty().addListener((ChangeListener<State>) (ov, oldState, newState) -> {
             if (newState == State.SUCCEEDED) {
                 webEngine.executeScript(
@@ -59,7 +60,7 @@ public class Browser extends Region {
         progress.visibleProperty().set(Boolean.FALSE);
         vb.getChildren().addAll(progress, browser);
 
-
+        browser.setPrefHeight(Screen.getMainScreen().getHeight());
         getChildren().add(vb);
     }
 
@@ -68,16 +69,6 @@ public class Browser extends Region {
         double w = getWidth();
         double h = getHeight();
         layoutInArea(vb, 0, 0, w, h, 0, HPos.CENTER, VPos.CENTER);
-    }
-
-    @Override
-    protected double computePrefWidth(double height) {
-        return 750;
-    }
-
-    @Override
-    protected double computePrefHeight(double width) {
-        return 500;
     }
 
     public void loadUrl(URL url) {

@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.sleepycat.je.DatabaseException;
+import com.sun.glass.ui.Screen;
 
 import de.gruphi.tdwtf_reader.concurrency.ScrapeMonthlyArticlesTask;
 import de.gruphi.tdwtf_reader.db.DataStore;
@@ -88,8 +89,15 @@ public class Main extends Application {
         vb.getChildren().addAll(pb, tree);
         pane.setLeft(vb);
         pane.setCenter(browser);
-        scene = new Scene(pane, 750, 500, Color.WHITE);
+
+
+        Screen screen = Screen.getMainScreen();
+
+        scene = new Scene(pane, screen.getWidth(), screen.getHeight(), Color.WHITE);
         stage.setScene(scene);
+        
+        tree.setPrefHeight(screen.getHeight());
+
         scene.getStylesheets().add("reader.css");
 
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
