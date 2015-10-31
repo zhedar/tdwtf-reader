@@ -1,4 +1,4 @@
-package de.gruphi.tdwtf_reader;
+package de.gruphi.tdwtf_reader.view;
 import de.gruphi.tdwtf_reader.entities.InteractableItem;
 
 public class TreeItemRootNode implements InteractableItem {

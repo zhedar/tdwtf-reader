@@ -1,4 +1,4 @@
-package de.gruphi.tdwtf_reader;
+package de.gruphi.tdwtf_reader.view;
 import java.io.IOException;
 import java.net.URL;
 
