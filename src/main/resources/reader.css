@@ -56,7 +56,7 @@ a {
 
 #article img {
 	/* By default, images are centered on their own line. */
-	margin: 0.5em auto;
+	margin: 0.5em;
 	display: block;
 	height: auto;
 }
@@ -188,10 +188,6 @@ blockquote {
 	padding-left: 16px;
 }
 
-blockquote:not (.simple ) {
-	border-left: 3px solid rgba(0, 0, 0, 0.1);
-}
-
 /* Collapse excess whitespace. */
 .page p>p:empty, .page div>p:empty, .page p>div:empty, .page div>div:empty,
 	.page p+br, .page p>br:only-child, .page div>br:only-child, .page img+br
@@ -208,7 +204,7 @@ blockquote:not (.simple ) {
 
 .page table td, .page table th {
 	padding: 0.25em 0.5em;
-	border: 1px solid rgb(216, 216, 216);
+	border: 1px;
 }
 
 .page table th {
@@ -448,10 +444,6 @@ body.telugu {
 	.page-number {
 		display: block;
 	}
-	#article :nth-child (1 of .page ):nth-last-child (1 of .page ) .page-number
-		{
-		display: none;
-	}
 	.page-number, #incoming-page-corner {
 		font-weight: bold;
 		position: absolute;
@@ -466,15 +458,7 @@ body.telugu {
 		padding-top: 35px;
 		padding-bottom: 35px;
 		position: relative;
-		border-top: 1px solid rgba(0, 0, 0, 0.2);
-	}
-	#article :nth-child (1 of .page ) {
-		margin-top: 0;
-		border-top: none;
-		padding-top: 20px;
-	}
-	.page:last-of-type {
-		padding-bottom: 45px;
+		border-top: 1px;
 	}
 	.page video {
 		position: relative;
@@ -515,93 +499,11 @@ body.telugu {
 	}
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:3) {
-}
-
 #article .extendsBeyondTextColumn {
 	max-width: none;
 }
 
-@media screen and (min-width: 0px) {
-	/* Includes iPhone 5 in portrait */
-	.page {
-		padding-left: 16px;
-		padding-right: 16px;
-	}
-	.page-number, #incoming-page-corner {
-		top: 8px;
-		right: 16px;
-	}
-	#article :nth-child (1 of .page ):nth-last-child (1 of .page ) {
-		padding-top: 2px;
-	}
-}
 
-@media screen and (min-width: 375px) {
-	/* iPhone 6 in portrait */
-	.page {
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-	.page-number, #incoming-page-corner {
-		top: 8px;
-		right: 20px;
-	}
-	#article :nth-child (1 of .page ):nth-last-child (1 of .page ) {
-		padding-top: 6px;
-	}
-}
-
-@media screen and (min-width: 414px) {
-	/* iPhone 6 Plus in portrait */
-	.page {
-		padding-left: 22px;
-		padding-right: 22px;
-	}
-	.page-number, #incoming-page-corner {
-		top: 8px;
-		right: 22px;
-	}
-	#article :nth-child (1 of .page ):nth-last-child (1 of .page ) {
-		padding-top: 8px;
-	}
-}
-
-/* iPhone 5 in landscape (568px) */
-@media screen and (min-width: 667px) {
-	/* iPhone 6 in landscape */
-	.page {
-		padding-left: 40px;
-		padding-right: 40px;
-	}
-	.page-number, #incoming-page-corner {
-		/* Stop lining this text up with .page's right margin. */
-		top: 10px;
-		right: 10px;
-	}
-	#article :nth-child (1 of .page ):nth-last-child (1 of .page ) {
-		padding-top: 14px;
-	}
-}
-
-@media screen and (min-width: 704px) {
-	/* iPad in landscape with the sidebar open */
-	.page {
-		padding-left: 42px;
-		padding-right: 42px;
-	}
-}
-
-@media screen and (min-width: 736px) {
-	/* iPhone 6 Plus in landscape */
-	.page {
-		padding-left: 60px;
-		padding-right: 60px;
-	}
-	#article :nth-child (1 of .page ):nth-last-child (1 of .page ) {
-		padding-top: 34px;
-	}
-}
 
 @media only screen and (min-width: 780px) {
 	body {
@@ -609,7 +511,7 @@ body.telugu {
 	}
 	#article {
 		max-width: 800px;
-		margin: 0 auto;
+		margin: 0;
 	}
 
 	/* Readable margins. */
@@ -655,10 +557,6 @@ html.paper {
 	height: 100%;
 }
 
-html.paper body {
-	height: calc(100% - 44px);
-}
-
 html.paper body:after {
 	content: "";
 	height: 22px;
@@ -667,12 +565,7 @@ html.paper body:after {
 
 html.paper #article {
 	min-height: 100%;
-	margin: 22px auto 0 auto;
-}
-
-html.paper #article :nth-child (1 of .page ), html.paper #article :nth-child
-	(1 of .page ):nth-last-child (1 of .page ) {
-	padding-top: 46px;
+	margin: 22px;
 }
 
 html.paper #article .page-number, html.paper #article #incoming-page-corner
@@ -683,29 +576,6 @@ html.paper #article .page-number, html.paper #article #incoming-page-corner
 }
 /* End Reader's paper appearance. */
 
-/* Use slightly smaller page padding when vertically constrained. */
-@media screen and (max-height: 700px) {
-	.page {
-		padding-top: 32px;
-		padding-bottom: 32px;
-	}
-}
-
-html:not (.paper ) body.white, body.white #article {
-	background-color: rgb(251, 251, 251);
-}
-
-html:not (.paper ) body.sepia, body.sepia #article {
-	background-color: rgb(248, 241, 227);
-}
-
-html:not (.paper ) body.gray, body.gray #article {
-	background-color: rgb(90, 90, 92);
-}
-
-html:not (.paper ) body.night, body.night #article {
-	background-color: rgb(18, 18, 18);
-}
 
 /* OS X Reader draws backdrop background colors outside of web content, so the follow set only applies to iOS. */
 html.paper body.ios.white {
@@ -722,22 +592,6 @@ html.paper body.ios.gray {
 
 html.paper body.ios.night {
 	background-color: black;
-}
-
-html.paper body.white #article {
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-}
-
-html.paper body.sepia #article {
-	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
-}
-
-html.paper body.gray #article {
-	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
-}
-
-html.paper body.night #article {
-	box-shadow: 0 0 5px rgba(255, 255, 255, 0.35);
 }
 
 body.sepia #article .leading-image, body.sepia #article figure, body.sepia #article .auxiliary
@@ -809,25 +663,14 @@ body.sepia #article blockquote {
 	color: rgb(140, 112, 79);
 }
 
-body.sepia #article blockquote:not (.simple ) {
-	border-left-color: rgba(154, 128, 92, 0.1);
-}
-
 body.gray #article blockquote {
 	color: rgba(255, 255, 255, 0.5);
-}
-
-body.gray #article blockquote:not (.simple ) {
-	border-left-color: rgba(255, 255, 255, 0.1);
 }
 
 body.night #article blockquote {
 	color: rgba(255, 255, 255, 0.6);
 }
 
-body.night #article blockquote:not (.simple ) {
-	border-left-color: rgba(255, 255, 255, 0.15);
-}
 
 body.sepia .page table td, body.sepia .page table th {
 	border-color: rgb(230, 218, 202);
@@ -857,11 +700,6 @@ body.night .page table th {
 
 b { font-weight: bold; }
 i { font-style: italic; }
-i[class^="icon"] { font-style: inherit; }
-
-.admin-only { display: none; }
-
-.article-body hr { clear: none; }
 
 ul.advertise-reasons { }
 ul.advertise-reasons li { list-style-type: disc; margin-left: 20px; }
@@ -876,53 +714,19 @@ ul.advertise-reasons li { list-style-type: disc; margin-left: 20px; }
 .articleList ul li a { display: block; }
 h5.heading { background-color: #2c2c2c; color: #fff;padding: 10px; margin-bottom: 1px; }
 a.clean,
-a:visited.clean
+a:visited.clean, 
 a:hover.clean { font-weight: inherit; font-style: inherit; border: inherit; text-decoration: inherit; color: inherit; }
-
-div.nav-article { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-div.nav-article a { display: block; }
-
-a.social-icon,
-a.social-icon:visited,
-a.social-icon:hover { width: 24px; height: 24px; display: inline-block; text-decoration: none; } 
-a.social-icon.facebook { background-image: url('/content/images/icons/facebook-24.png'); background-color: #3b5998; }
-a.social-icon.twitter { background-image: url('/content/images/icons/twitter-24.png'); background-color: #00aced; }
-a.social-icon.email { background-image: url('/content/images/icons/email-24.png'); background-color: #999; }
-a.social-icon.google-plus { background-image: url('/content/images/icons/googleplus-24.png'); background-color: #d14836; }
-
-.datepicker table thead { background-color: inherit; color: inherit; }
-.datepicker.dropdown-menu { z-index: 1000; }
-.field input.date,
-.field input.time { width: inherit; }
-
-.search-container { position: absolute; right: -80px; width: 200px; }
 
 table.article-listing td.draft { background-color: #e6d25f; }
 table.article-listing td.pending { background-color: #75BED8; }
 table.article-listing td.published { background-color: #8ad46a; }
 
-table td span.admin-yes { padding: 4px; background-color: #8ad46a; }
-table td span.admin-no { padding: 4px; background-color: #ce4d4d; }
-
 .articleListItem header h5 { margin-left:15px; font-size: 100%; color: #888; }
-
-.side-bar-list > ul > li { background-color: #fff; margin-bottom: 1px; white-space: nowrap; overflow: hidden; position: relative; padding: 10px 15px; }
-.side-bar-list > ul > li.no-pad,
-.side-bar-list > ul > li.no-pad p { padding: 0; white-space: normal; }
-    .side-bar-list > ul > li.no-pad p { margin-bottom: 0; }
-.side-bar-list ul ul li { list-style-type: circle; }
-
-
-.side-bar-list.sponsors .sponsor { text-align: center; }
-.side-bar-list.sponsors .sponsor img { width: 200px; }
 
 .four.columns aside div.about { padding: 10px; background-color: white; }
 .four.columns aside div.about p { font-size: 12px; }
 
 pre { font-family: Consolas, monospace; white-space:pre-wrap}
-
-div.previous-article { width: 45%; float: left; }
-div.next-article { width: 45%; float: right; text-align: right; }
 
 div.horizontal { text-align: center; }
 div.horizontal ul li { display: inline-block; margin-right: 25px; }
@@ -935,37 +739,4 @@ div.sponsor-container::after { clear: both; }
 
 div.sponsor-footer { margin-top: 20px; text-align: center; }
 
-div.message,
-div.validation-summary-errors { background-color: white; border: 5px solid #FFF; padding: 15px; width: 75%; margin: 0 auto; }
-div.message.error { color: #A00; border-color: #A00; }
-div.message.warning { color: #EA8800; border-color: #EA8800; }
-div.message.info { color: #00ACED; border-color: #00ACED; }
-div.message.success { color: #8AD46A; border-color: #8AD46A; }
-
-div.validation-summary-errors { color: #A00; border-color: #A00; }
-div.validation-summary-errors ul li { list-style-type: disc; margin-left: 15px; }
-
-.comment .timestamp { float: right; font-size: 75%; }
-.comment .avatar { width: 30px; height: 30px; vertical-align: bottom; margin: 3px; }
-.comment .emoji { width: 18px; height: 18px; }
-.comment blockquote { margin: 5px 0; padding: 5px; background-color: #EEE; }
-.comment blockquote p { margin: 0; padding: 5px; }
-
-.top-discourse-link { float: right; font-weight: normal !important; }
-.top-discourse-link:hover { text-decoration: underline; } 
-.discourse-link { float: right; color: #08c; background: #e0f5ff; padding: 8px 20px; margin-left: 10px; font-size: 16px; vertical-align: top; }
-
 .inset { float: right; margin: 8pt; width: 52%; }
-
-.navbar.dailywtf.fixed .logo { margin: 9px 6px 6px 0; max-width: inherit; height: 45px; }
-
-@media (max-width: 767px) {
-    .navbar.dailywtf div.megadropdown { display: none !important; }
-    .navbar.dailywtf li > a { color: #fff; }
-}
-
-@media print {
-    .no-print { display: none; }
-}
-
-

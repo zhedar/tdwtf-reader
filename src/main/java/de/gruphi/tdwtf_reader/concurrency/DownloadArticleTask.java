@@ -51,7 +51,7 @@ public class DownloadArticleTask extends Task<String> {
 
         //embed inline css
         //TODO that's quite ugly, externalize stylesheets
-        String css =  String.join("", Files.readAllLines(Paths.get("reader.css")));
+        String css =  String.join("", Files.readAllLines(Paths.get("src/main/resources/reader.css")));
 
         return  "<html><body><style>" + css+ "</style><h1>" +
                 article.getTitle() +  "</h1>" + articleHtml + "</html>";
