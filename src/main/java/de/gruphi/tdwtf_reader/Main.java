@@ -160,10 +160,14 @@ public class Main extends Application {
     }
 
     private void createTreeItem(TreeItem<InteractableItem> root, MonthlyArticles mo) {
+        //there's no content to display for this month (yet)
+        if(mo == null)
+            return;
+
         TreeItem<InteractableItem> treeItem = new TreeItem<InteractableItem>(mo);
 
-      //in case of an update, remove the older entry
-      for(TreeItem<InteractableItem> i : root.getChildren())
+        //in case of an update, remove the older entry
+        for(TreeItem<InteractableItem> i : root.getChildren())
             if(i.getValue().toString().equals(mo.toString())) {
                 if(root.getValue().equals(mo))
                     root.getChildren().remove(i);

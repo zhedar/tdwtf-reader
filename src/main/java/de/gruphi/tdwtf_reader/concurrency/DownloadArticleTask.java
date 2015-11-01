@@ -13,7 +13,7 @@ import javafx.concurrent.Task;
 /**
  * An asynchronous {@link Task}, which does a GET request
  * on an DWTF article url and extracts the HTML content.<br/>
- *
+ * Also does some post-processing on the original HTML.
  */
 public class DownloadArticleTask extends Task<String> {
     private Article article;
@@ -32,7 +32,7 @@ public class DownloadArticleTask extends Task<String> {
 
         for (Element articleElement : articleBody.getAllElements())
         {
-            //TODO implement comment subtraction this way, if needed
+            //TODO implement comment substitution this way, if needed
 //            for(Node n: articleElement.childNodes())
 //                if(n instanceof Comment) {
 //                    System.out.println(((Comment) n).getData());
@@ -44,7 +44,7 @@ public class DownloadArticleTask extends Task<String> {
         }
         String articleHtml = articleBody.toString();
 
-        //show mark's legendary html comments.
+        //show html comments as made by remy.
         //TODO test if this affects html and xml comments in shown code
         articleHtml = articleHtml.replaceAll("<\\!--", "<div style='color:red'>");
         articleHtml = articleHtml.replaceAll("-->", "</div>");
