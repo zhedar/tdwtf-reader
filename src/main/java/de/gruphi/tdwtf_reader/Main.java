@@ -107,10 +107,12 @@ public class Main extends Application {
             @Override
             public void handle(WindowEvent event) {
                 event.consume();
-                Platform.exit();
-                System.exit(0);
+
                 //cancel workers, which weren't executed yet
                 executor.shutdown();
+
+                Platform.exit();
+                System.exit(0);
             }
         });
         stage.show();
