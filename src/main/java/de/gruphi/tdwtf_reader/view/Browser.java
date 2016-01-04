@@ -56,13 +56,7 @@ public class Browser extends Region {
         webEngine.setOnAlert(new EventHandler<WebEvent<String>>() {
             @Override
             public void handle(WebEvent<String> e) {
-                currentArticle.setRead(true);
-                try (DataStore d = new DataStore()) {
-                    d.updateArticle(currentArticle);
-                    articleReadProp.set(true);
-                } catch (Exception e2) {
-                    e2.printStackTrace();
-                }
+                markAsRead();
             }
         });
 
@@ -118,10 +112,22 @@ public class Browser extends Region {
 
     }
 
+    private void markAsRead() {
+        currentArticle.setRead(true);
+        try (DataStore d = new DataStore()) {
+            d.updateArticle(currentArticle);
+            articleReadProp.set(true);
+        } catch (Exception e2) {
+            e2.printStackTrace();
+        }
+    }
+
     private void safeBrowse(String url) {
         try {
             URI authorURI = new URI(url);
             Desktop.getDesktop().browse(authorURI);
+
+            markAsRead();
         }
         catch (Exception e) {
             //TODO handle
