@@ -50,7 +50,7 @@ public class Main extends Application {
 
         BorderPane pane = new BorderPane();
         TreeItem<InteractableItem> root = new TreeItem<InteractableItem>(
-                new TreeItemRootNode("Avaiable Months"));
+                new TreeItemRootNode("Available Months"));
         root.setExpanded(true);
 
         executor = Executors.newFixedThreadPool(10);
